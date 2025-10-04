@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'home_screen.dart';
 import 'movies_screen.dart';
+import 'cinemas_screen.dart';
 import 'gifts_screen.dart';
 import 'more_screen.dart';
 
@@ -26,6 +27,7 @@ class _MainShellState extends State<MainShell> {
     _tabs = [
       HomeScreen(onScroll: _handleHomeScroll),
       const MoviesScreen(),
+      const CinemasScreen(),
       const GiftsScreen(),
       const MoreScreen(),
     ];
@@ -34,6 +36,15 @@ class _MainShellState extends State<MainShell> {
   double _homeScroll = 0.0;
   void _handleHomeScroll(double pixels) {
     setState(() => _homeScroll = pixels);
+  }
+
+  void _onNavTap(int index) {
+    setState(() => _currentIndex = index);
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 280),
+      curve: Curves.easeInOutCubic,
+    );
   }
 
   @override
@@ -54,82 +65,100 @@ class _MainShellState extends State<MainShell> {
         onPageChanged: (i) => setState(() => _currentIndex = i),
         children: _tabs,
       ),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: const Color(0xFF1A1A1A),
-        indicatorColor: colorScheme.primary.withOpacity(0.12),
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (i) {
-          setState(() => _currentIndex = i);
-          _pageController.animateToPage(
-            i,
-            duration: const Duration(milliseconds: 280),
-            curve: Curves.easeInOutCubic,
-          );
-        },
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home_rounded), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.movie_outlined), selectedIcon: Icon(Icons.movie), label: 'Movies'),
-          NavigationDestination(icon: Icon(Icons.card_giftcard_outlined), selectedIcon: Icon(Icons.card_giftcard), label: 'Gifts'),
-          NavigationDestination(icon: Icon(Icons.more_horiz), selectedIcon: Icon(Icons.more_horiz), label: 'More'),
-        ],
+      bottomNavigationBar: Container(
+        height: 80,
+        decoration: const BoxDecoration(
+          color: Color(0xFF1A1A1A),
+          border: Border(
+            top: BorderSide(color: Color(0xFF2A2A2A), width: 1),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            // Home
+            _NavItem(
+              icon: Icons.home_rounded,
+              label: 'Home',
+              isSelected: _currentIndex == 0,
+              onTap: () => _onNavTap(0),
+            ),
+            // Movies
+            _NavItem(
+              icon: Icons.movie_outlined,
+              label: 'Movies',
+              isSelected: _currentIndex == 1,
+              onTap: () => _onNavTap(1),
+            ),
+            // Cinema
+            _NavItem(
+              icon: Icons.location_on_outlined,
+              label: 'Cinema',
+              isSelected: _currentIndex == 2,
+              onTap: () => _onNavTap(2),
+            ),
+            // Gifts
+            _NavItem(
+              icon: Icons.card_giftcard_outlined,
+              label: 'Gifts',
+              isSelected: _currentIndex == 3,
+              onTap: () => _onNavTap(3),
+            ),
+            // More
+            _NavItem(
+              icon: Icons.more_horiz,
+              label: 'More',
+              isSelected: _currentIndex == 4,
+              onTap: () => _onNavTap(4),
+            ),
+          ],
+        ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: _FastBookingButton(progress: (_homeScroll / 120).clamp(0.0, 1.0)),
     );
   }
 }
 
-class _FastBookingButton extends StatelessWidget {
-  const _FastBookingButton({required this.progress});
-  // 0.0 = extended, 1.0 = small circular
-  final double progress;
+
+class _NavItem extends StatelessWidget {
+  const _NavItem({
+    required this.icon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    // Match the smaller reference size (right image)
-    const double extendedWidth = 168.0;
-    const double height = 40.0;
-    final width = lerpDouble(extendedWidth as double, height, progress)!;
-    final borderRadius = BorderRadius.circular(height / 2);
-    final showLabelOpacity = (1 - progress).clamp(0.0, 1.0);
-
-    return SafeArea(
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 260),
-        curve: Curves.easeInOutCubic,
-        padding: const EdgeInsets.only(right: 8, bottom: 8),
-        width: width > MediaQuery.of(context).size.width - 32
-            ? MediaQuery.of(context).size.width - 32
-            : width,
-        height: height,
-        decoration: BoxDecoration(
-          color: const Color(0xFFFAC23A),
-          borderRadius: borderRadius,
-          boxShadow: const [
-            BoxShadow(color: Colors.black54, blurRadius: 16, offset: Offset(0, 8)),
-          ],
-        ),
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            borderRadius: borderRadius,
-            onTap: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.bolt_rounded, color: Colors.black, size: 18),
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 180),
-                  curve: Curves.easeOut,
-                  opacity: showLabelOpacity,
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text('Fast Booking', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 13)),
-                  ),
-                ),
-              ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: isSelected ? const Color(0xFFFAC23A) : Colors.grey,
+              size: 24,
             ),
-          ),
+            // Show label only when selected
+            if (isSelected) ...[
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: const TextStyle(
+                  color: Color(0xFFFAC23A),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ],
         ),
       ),
     );

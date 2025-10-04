@@ -72,22 +72,34 @@ class PosterCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // TRENDING diagonal banner
                   if (isTrending)
                     Positioned(
-                      right: 10,
-                      bottom: 10,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFAC23A),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.trending_up, size: 14, color: Colors.black),
-                            SizedBox(width: 4),
-                            Text('TRENDING', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: Colors.black)),
-                          ],
+                      top: 10,
+                      right: -20,
+                      child: Transform.rotate(
+                        angle: 0.6, // Approximately 34 degrees in radians
+                        child: Container(
+                          width: 100,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFAC23A),
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(
+                              color: const Color(0xFFFAC23A),
+                              width: 1,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'TRENDING',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -114,6 +126,7 @@ class PosterCard extends StatelessWidget {
     );
   }
 }
+
 
 class _PosterFallback extends StatelessWidget {
   @override
