@@ -17,6 +17,15 @@ class _CinemasScreenState extends State<CinemasScreen> {
   final List<String> _categories = ['All', 'IMAX', '4DX', 'Screen X', 'Kids', 'LED'];
 
   @override
+  void initState() {
+    super.initState();
+    // Add listener to search controller to rebuild UI when search text changes
+    _searchController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
@@ -97,20 +106,20 @@ class _CinemasScreenState extends State<CinemasScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF1A1A1A),
       body: SafeArea(
         child: Column(
           children: [
             // Header
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
               child: Row(
                 children: [
                   const Text(
                     'Cinemas',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 28,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -121,101 +130,77 @@ class _CinemasScreenState extends State<CinemasScreen> {
             // Primary Filter Tabs
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2A2A2A),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Stack(
-                  children: [
-                    // Animated background
-                    AnimatedPositioned(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      left: _selectedTab == 0 ? 0 : 
-                            _selectedTab == 1 ? (MediaQuery.of(context).size.width - 32) / 3 : 
-                            (MediaQuery.of(context).size.width - 32) * 2 / 3,
-                      top: 0,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _onTabChanged(0),
                       child: Container(
-                        width: (MediaQuery.of(context).size.width - 32) / 3,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFAC23A),
+                          color: _selectedTab == 0 ? const Color(0xFFFAC23A) : Colors.transparent,
                           borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'All Cinemas',
+                            style: TextStyle(
+                              color: _selectedTab == 0 ? Colors.black : Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    // Tab buttons
-                    Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => _onTabChanged(0),
-                            child: Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'All Cinemas',
-                                  style: TextStyle(
-                                    color: _selectedTab == 0 ? Colors.black : Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _onTabChanged(1),
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: _selectedTab == 1 ? const Color(0xFFFAC23A) : Colors.transparent,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Favourite',
+                            style: TextStyle(
+                              color: _selectedTab == 1 ? Colors.black : Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => _onTabChanged(1),
-                            child: Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Favourite',
-                                  style: TextStyle(
-                                    color: _selectedTab == 1 ? Colors.black : Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => _onTabChanged(2),
-                            child: Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Recents',
-                                  style: TextStyle(
-                                    color: _selectedTab == 2 ? Colors.black : Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _onTabChanged(2),
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: _selectedTab == 2 ? const Color(0xFFFAC23A) : Colors.transparent,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Recents',
+                            style: TextStyle(
+                              color: _selectedTab == 2 ? Colors.black : Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             
@@ -250,6 +235,21 @@ class _CinemasScreenState extends State<CinemasScreen> {
                         ),
                       ),
                     ),
+                    // Clear button (only show when there's text)
+                    if (_searchController.text.isNotEmpty)
+                      GestureDetector(
+                        onTap: () {
+                          _searchController.clear();
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.grey,
+                            size: 20,
+                          ),
+                        ),
+                      ),
                     const Icon(
                       Icons.tune,
                       color: Colors.grey,
@@ -340,74 +340,104 @@ class _CinemasScreenState extends State<CinemasScreen> {
             
             // Cinema List
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Nearby Cinemas (first 5 items)
-                    ..._getFilteredCinemas().take(5).map((cinema) {
-                      final isFavourite = _favouriteCinemas.contains(cinema['name']);
-                      return GestureDetector(
-                        onTap: () => _addToRecent(cinema['name']!),
-                        child: _CinemaCard(
-                          name: cinema['name']!,
-                          distance: cinema['distance']!,
-                          logoType: cinema['logoType']!,
-                          isFavourite: isFavourite,
-                          onFavouriteToggle: () => _toggleFavourite(cinema['name']!),
-                          showFavouriteButton: true,
-                        ),
-                      );
-                    }).toList(),
-                    
-                    // All Cinemas section (only for All Cinemas tab)
-                    if (_selectedTab == 0) ...[
-                      const SizedBox(height: 20),
-                      const Text(
-                        'All Cinemas',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+              child: _getFilteredCinemas().isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.search_off,
+                            size: 80,
+                            color: Colors.grey.shade700,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'No cinemas found',
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Try adjusting your search or filters',
+                            style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10),
-                      // Remaining cinemas
-                      ..._getFilteredCinemas().skip(5).map((cinema) {
-                        final isFavourite = _favouriteCinemas.contains(cinema['name']);
-                        return GestureDetector(
-                          onTap: () => _addToRecent(cinema['name']!),
-                          child: _CinemaCard(
-                            name: cinema['name']!,
-                            distance: cinema['distance']!,
-                            logoType: cinema['logoType']!,
-                            isFavourite: isFavourite,
-                            onFavouriteToggle: () => _toggleFavourite(cinema['name']!),
-                            showFavouriteButton: true,
-                          ),
-                        );
-                      }).toList(),
-                    ] else ...[
-                      // For Favourite and Recents tabs, show all filtered cinemas
-                      ..._getFilteredCinemas().map((cinema) {
-                        final isFavourite = _favouriteCinemas.contains(cinema['name']);
-                        return GestureDetector(
-                          onTap: () => _addToRecent(cinema['name']!),
-                          child: _CinemaCard(
-                            name: cinema['name']!,
-                            distance: cinema['distance']!,
-                            logoType: cinema['logoType']!,
-                            isFavourite: isFavourite,
-                            onFavouriteToggle: () => _toggleFavourite(cinema['name']!),
-                            showFavouriteButton: true,
-                          ),
-                        );
-                      }).toList(),
-                    ],
-                  ],
-                ),
-              ),
+                    )
+                  : SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Nearby Cinemas (first 5 items)
+                          ..._getFilteredCinemas().take(5).map((cinema) {
+                            final isFavourite = _favouriteCinemas.contains(cinema['name']);
+                            return GestureDetector(
+                              onTap: () => _addToRecent(cinema['name']!),
+                              child: _CinemaCard(
+                                name: cinema['name']!,
+                                distance: cinema['distance']!,
+                                logoType: cinema['logoType']!,
+                                isFavourite: isFavourite,
+                                onFavouriteToggle: () => _toggleFavourite(cinema['name']!),
+                                showFavouriteButton: true,
+                              ),
+                            );
+                          }).toList(),
+                          
+                          // All Cinemas section (only for All Cinemas tab)
+                          if (_selectedTab == 0 && _getFilteredCinemas().length > 5) ...[
+                            const SizedBox(height: 20),
+                            const Text(
+                              'All Cinemas',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            // Remaining cinemas
+                            ..._getFilteredCinemas().skip(5).map((cinema) {
+                              final isFavourite = _favouriteCinemas.contains(cinema['name']);
+                              return GestureDetector(
+                                onTap: () => _addToRecent(cinema['name']!),
+                                child: _CinemaCard(
+                                  name: cinema['name']!,
+                                  distance: cinema['distance']!,
+                                  logoType: cinema['logoType']!,
+                                  isFavourite: isFavourite,
+                                  onFavouriteToggle: () => _toggleFavourite(cinema['name']!),
+                                  showFavouriteButton: true,
+                                ),
+                              );
+                            }).toList(),
+                          ] else if (_selectedTab != 0) ...[
+                            // For Favourite and Recents tabs, show remaining filtered cinemas
+                            ..._getFilteredCinemas().skip(5).map((cinema) {
+                              final isFavourite = _favouriteCinemas.contains(cinema['name']);
+                              return GestureDetector(
+                                onTap: () => _addToRecent(cinema['name']!),
+                                child: _CinemaCard(
+                                  name: cinema['name']!,
+                                  distance: cinema['distance']!,
+                                  logoType: cinema['logoType']!,
+                                  isFavourite: isFavourite,
+                                  onFavouriteToggle: () => _toggleFavourite(cinema['name']!),
+                                  showFavouriteButton: true,
+                                ),
+                              );
+                            }).toList(),
+                          ],
+                        ],
+                      ),
+                    ),
             ),
           ],
         ),
@@ -436,10 +466,10 @@ class _CinemaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
+        color: const Color(0xFF2A2A2A),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -485,24 +515,29 @@ class _CinemaCard extends StatelessWidget {
           ),
           
           // Action Buttons
-          Row(
+          Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (showFavouriteButton) ...[
-                GestureDetector(
-                  onTap: onFavouriteToggle,
-                  child: Icon(
-                    isFavourite ? Icons.star : Icons.star_border,
-                    color: const Color(0xFFFAC23A),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (showFavouriteButton) ...[
+                    GestureDetector(
+                      onTap: onFavouriteToggle,
+                      child: Icon(
+                        isFavourite ? Icons.star : Icons.star_border,
+                        color: const Color(0xFFFAC23A),
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                  ],
+                  const Icon(
+                    Icons.share_outlined,
+                    color: Colors.grey,
                     size: 24,
                   ),
-                ),
-                const SizedBox(width: 16),
-              ],
-              const Icon(
-                Icons.share_outlined,
-                color: Colors.grey,
-                size: 24,
+                ],
               ),
             ],
           ),
@@ -612,9 +647,93 @@ class _CinemaCard extends StatelessWidget {
 // Mock data
 final List<Map<String, dynamic>> _mockCinemas = [
   {
+    'name': 'Major Central Rama III',
+    'distance': '0.69 km',
+    'logoType': 'major',
+    'features': ['IMAX', '4DX'],
+  },
+  {
+    'name': 'Major Lotus Bang Pakok',
+    'distance': '4.22 km',
+    'logoType': 'major',
+    'features': ['IMAX', 'Kids'],
+  },
+  {
     'name': 'Major Big C Suksawat',
     'distance': '4.37 km',
     'logoType': 'major',
     'features': ['IMAX', 'Kids'],
+  },
+  {
+    'name': 'ICON CINECONIC',
+    'distance': '4.89 km',
+    'logoType': 'icon',
+    'features': ['IMAX', '4DX'],
+  },
+  {
+    'name': 'Quartier CineArt',
+    'distance': '5.77 km',
+    'logoType': 'quartier',
+    'features': ['LED', 'Kids'],
+  },
+  {
+    'name': 'Major Sukhumvit-Ekkamai',
+    'distance': '5.99 km',
+    'logoType': 'major',
+    'features': ['IMAX', '4DX'],
+  },
+  {
+    'name': 'Major Cineplex Ratchayothin',
+    'distance': '6.20 km',
+    'logoType': 'major',
+    'features': ['IMAX', '4DX', 'Kids'],
+  },
+  {
+    'name': 'Paragon Cineplex',
+    'distance': '6.85 km',
+    'logoType': 'paragon',
+    'features': ['IMAX', 'LED', 'Screen X'],
+  },
+  {
+    'name': 'Major Pinklao',
+    'distance': '7.12 km',
+    'logoType': 'major',
+    'features': ['IMAX', 'Kids'],
+  },
+  {
+    'name': 'Esplanade Cineplex',
+    'distance': '7.45 km',
+    'logoType': 'esplanade',
+    'features': ['4DX', 'Kids'],
+  },
+  {
+    'name': 'Krungsri IMAX',
+    'distance': '8.01 km',
+    'logoType': 'krungsri_imax',
+    'features': ['IMAX', 'LED'],
+  },
+  {
+    'name': 'Major Central Westgate',
+    'distance': '8.34 km',
+    'logoType': 'major',
+    'features': ['IMAX', '4DX', 'Kids'],
+  },
+  {
+    'name': 'Major Cineplex Rangsit',
+    'distance': '9.12 km',
+    'logoType': 'major',
+    'features': ['IMAX', 'Kids'],
+  },
+  {
+    'name': 'ICON Siam Paragon',
+    'distance': '9.50 km',
+    'logoType': 'icon',
+    'features': ['IMAX', 'LED', 'Screen X'],
+  },
+  {
+    'name': 'Major The Mall Bangkapi',
+    'distance': '10.15 km',
+    'logoType': 'major',
+    'features': ['IMAX', '4DX', 'Kids'],
   },
 ];

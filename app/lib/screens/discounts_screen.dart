@@ -23,7 +23,8 @@ class DiscountsScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              // Reset functionality
+              // Navigate to home screen with smooth transition
+              Navigator.of(context).pop();
             },
             child: const Text(
               'Reset',
@@ -49,15 +50,15 @@ class DiscountsScreen extends StatelessWidget {
             discountAmount: '50',
             validUntil: '08 Oct, 2025',
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
           const DiscountCard(
             imagePath: 'assets/coupon/image18.jpg',
-            title: 'Kids Cinema',
-            subtitle: 'Seacon Cineplex',
-            discountAmount: '50',
+            title: 'AIA Prestige Club',
+            subtitle: 'PARAGON CINEPLEX / ICON CINECONIC / QUARTIER CINEART',
+            discountAmount: '100',
             validUntil: '31 Dec, 2025',
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
           const DiscountCard(
             imagePath: 'assets/coupon/image19.jpg',
             title: 'AIA Prestige Club',

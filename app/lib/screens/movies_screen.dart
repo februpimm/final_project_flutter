@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/poster_card.dart';
+import 'movie_detail_screen.dart';
 
 class MoviesScreen extends StatefulWidget {
   const MoviesScreen({super.key});
@@ -212,6 +213,7 @@ class _NowShowingGrid extends StatelessWidget {
           imageUrl: movie['imageUrl']!,
           isTrending: movie['isTrending']!,
           technologies: movie['technologies']!,
+          isComingSoon: false,
         );
       },
     );
@@ -239,6 +241,7 @@ class _ComingSoonGrid extends StatelessWidget {
           imageUrl: movie['imageUrl']!,
           isTrending: false,
           technologies: movie['technologies']!,
+          isComingSoon: true,
         );
       },
     );
@@ -253,6 +256,7 @@ class _MovieCard extends StatelessWidget {
     required this.imageUrl,
     required this.isTrending,
     required this.technologies,
+    required this.isComingSoon,
   });
 
   final String title;
@@ -261,16 +265,33 @@ class _MovieCard extends StatelessWidget {
   final String imageUrl;
   final bool isTrending;
   final List<String> technologies;
+  final bool isComingSoon;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Movie Poster
-        Expanded(
-          flex: 3,
-          child: Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MovieDetailScreen(
+              movieTitle: title,
+              movieImage: imageUrl,
+              releaseDate: releaseDate,
+              genre: genre,
+              rating: '13',
+              duration: '192',
+              isComingSoon: isComingSoon,
+            ),
+          ),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Movie Poster
+          Expanded(
+            flex: 3,
+            child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               boxShadow: const [
@@ -389,6 +410,7 @@ class _MovieCard extends StatelessWidget {
           ),
         ),
       ],
+    ),
     );
   }
 }

@@ -6,9 +6,15 @@ import 'movies_screen.dart';
 import 'cinemas_screen.dart';
 import 'gifts_screen.dart';
 import 'more_screen.dart';
+import 'initial_more_screen.dart';
 
 class MainShell extends StatefulWidget {
-  const MainShell({super.key});
+  final int initialIndex;
+  
+  const MainShell({
+    super.key,
+    this.initialIndex = 0,
+  });
 
   @override
   State<MainShell> createState() => _MainShellState();
@@ -17,20 +23,45 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   int _currentIndex = 0;
   late final PageController _pageController;
+  bool _isLoggedIn = false;
 
-  late final List<Widget> _tabs;
+  List<Widget> _tabs = [];
 
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialIndex;
     _pageController = PageController(initialPage: _currentIndex);
+    
+    // Start with logged out state for More tab
+    _isLoggedIn = false;
+    
+    _updateTabs();
+  }
+
+  void _updateTabs() {
     _tabs = [
       HomeScreen(onScroll: _handleHomeScroll),
       const MoviesScreen(),
       const CinemasScreen(),
       const GiftsScreen(),
-      const MoreScreen(),
+      _isLoggedIn 
+          ? MoreScreen(onLogout: () => _setLoggedIn(false))
+          : InitialMoreScreen(onLoginComplete: () => _setLoggedIn(true)),
     ];
+  }
+
+
+  void _setLoggedIn(bool loggedIn) {
+    setState(() {
+      _isLoggedIn = loggedIn;
+      _updateTabs();
+    });
+    
+    // If user just logged in, stay on More tab but show MoreScreen
+    if (loggedIn && _currentIndex == 4) {
+      print('✅ User logged in - staying on More tab with MoreScreen');
+    }
   }
 
   double _homeScroll = 0.0;
@@ -100,7 +131,7 @@ class _MainShellState extends State<MainShell> {
             // Gifts
             _NavItem(
               icon: Icons.card_giftcard_outlined,
-              label: 'Gifts',
+              label: 'Documents',
               isSelected: _currentIndex == 3,
               onTap: () => _onNavTap(3),
             ),

@@ -1,109 +1,206 @@
 import 'package:flutter/material.dart';
+import 'login_screen.dart';
+import 'register_screen.dart';
+import 'initial_more_screen.dart';
+import 'main_shell.dart';
+import 'account_management_screen.dart';
+import 'ticket_screen.dart';
+import '../services/auth_service.dart';
 
 class MoreScreen extends StatelessWidget {
-  const MoreScreen({super.key});
+  final VoidCallback? onLogout;
+  
+  const MoreScreen({
+    super.key,
+    this.onLogout,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF1A1A1A),
+      bottomNavigationBar: Container(
+        height: 80,
+        decoration: const BoxDecoration(
+          color: Color(0xFF1A1A1A),
+          border: Border(
+            top: BorderSide(color: Color(0xFF2A2A2A), width: 1),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            // Home
+            _NavItem(
+              icon: Icons.home_rounded,
+              label: 'Home',
+              isSelected: false,
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const MainShell(initialIndex: 0),
+                  ),
+                );
+              },
+            ),
+            // Movies
+            _NavItem(
+              icon: Icons.movie_outlined,
+              label: 'Movies',
+              isSelected: false,
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const MainShell(initialIndex: 1),
+                  ),
+                );
+              },
+            ),
+            // Cinema
+            _NavItem(
+              icon: Icons.location_on_outlined,
+              label: 'Cinema',
+              isSelected: false,
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const MainShell(initialIndex: 2),
+                  ),
+                );
+              },
+            ),
+            // Gifts
+            _NavItem(
+              icon: Icons.card_giftcard_outlined,
+              label: 'Documents',
+              isSelected: false,
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const MainShell(initialIndex: 3),
+                  ),
+                );
+              },
+            ),
+            // More
+            _NavItem(
+              icon: Icons.more_horiz,
+              label: 'More',
+              isSelected: true,
+              onTap: () {
+                // Already on More screen
+              },
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
           child: Column(
             children: [
-              // Logo
-              const SizedBox(height: 40),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: _MajorCineplexLogo(),
-              ),
-              const SizedBox(height: 50),
-              
-              // Main Content
-              const Text(
-                'Enjoy an exclusive, new cinema experience.',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  height: 1.2,
-                ),
-                textAlign: TextAlign.left,
-              ),
-              const SizedBox(height: 16),
-              
-              // Orange separator line
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: 60,
-                  height: 3,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFAC23A),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              
+              // Header
+              const SizedBox(height: 20),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Create an account now to enjoy even more.',
+                  'More',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
-                    height: 1.3,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              const SizedBox(height: 40),
-              
-              // Login/Sign up Button
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFAC23A),
-                    foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    'Log in / Sign up',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               
               // Menu Items
               _MenuItem(
+                icon: Icons.person_outline,
+                title: 'Account Management',
+                rightWidget: const Icon(
+                  Icons.chevron_right,
+                  color: Colors.grey,
+                  size: 20,
+                ),
+                onTap: () {
+                  // Navigate to account management
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const AccountManagementScreen(),
+                    ),
+                  );
+                },
+              ),
+              _MenuItem(
+                icon: Icons.confirmation_number_outlined,
+                title: 'Ticket History',
+                rightWidget: const Icon(
+                  Icons.chevron_right,
+                  color: Colors.grey,
+                  size: 20,
+                ),
+                onTap: () {
+                  // Navigate to ticket history
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const TicketScreen(),
+                    ),
+                  );
+                },
+              ),
+              _MenuItem(
+                icon: Icons.credit_card_outlined,
+                title: 'Saved Cards',
+                rightWidget: const Icon(
+                  Icons.chevron_right,
+                  color: Colors.grey,
+                  size: 20,
+                ),
+                onTap: () {
+                  // Navigate to saved cards
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Saved Cards - Coming Soon')),
+                  );
+                },
+              ),
+              _MenuItem(
+                icon: Icons.swap_horiz_outlined,
+                title: 'Transaction History',
+                rightWidget: const Icon(
+                  Icons.chevron_right,
+                  color: Colors.grey,
+                  size: 20,
+                ),
+                onTap: () {
+                  // Navigate to transaction history
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Transaction History - Coming Soon')),
+                  );
+                },
+              ),
+              _MenuItem(
                 icon: Icons.language_outlined,
                 title: 'Language',
-                rightWidget: const Text(
-                  'ไทย | ',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                ),
-                rightWidget2: const Text(
-                  'ENG',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+                rightWidget: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'ไทย | ',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      'ENG',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               _MenuItem(
@@ -124,6 +221,28 @@ class MoreScreen extends StatelessWidget {
                   size: 20,
                 ),
               ),
+              _MenuItem(
+                icon: Icons.logout_outlined,
+                title: 'Log Out',
+                iconColor: Colors.red,
+                textColor: Colors.red,
+                rightWidget: null,
+                onTap: () async {
+                  // Sign out from Firebase
+                  final authService = AuthService();
+                  await authService.signOut();
+                  
+                  // Navigate to MainShell with More tab (InitialMoreScreen) and clear all previous routes
+                  if (context.mounted) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => const MainShell(initialIndex: 4), // More tab
+                      ),
+                      (Route<dynamic> route) => false,
+                    );
+                  }
+                },
+              ),
               
               const SizedBox(height: 40),
               
@@ -140,7 +259,7 @@ class MoreScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      'Version 7.25.0-208',
+                      'Version 7.25.1-210',
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
@@ -191,6 +310,51 @@ class _MajorCineplexLogo extends StatelessWidget {
   }
 }
 
+class _NavItem extends StatelessWidget {
+  const _NavItem({
+    required this.icon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: isSelected ? const Color(0xFFFAC23A) : Colors.grey,
+              size: 24,
+            ),
+            // Show label only when selected
+            if (isSelected) ...[
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: const TextStyle(
+                  color: Color(0xFFFAC23A),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class _MenuItem extends StatelessWidget {
   const _MenuItem({
@@ -199,6 +363,8 @@ class _MenuItem extends StatelessWidget {
     this.rightWidget,
     this.rightWidget2,
     this.onTap,
+    this.iconColor,
+    this.textColor,
   });
 
   final IconData icon;
@@ -206,6 +372,8 @@ class _MenuItem extends StatelessWidget {
   final Widget? rightWidget;
   final Widget? rightWidget2;
   final VoidCallback? onTap;
+  final Color? iconColor;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -224,12 +392,12 @@ class _MenuItem extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFAC23A),
+                    color: iconColor ?? const Color(0xFFFAC23A),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     icon,
-                    color: Colors.black,
+                    color: iconColor == Colors.red ? Colors.white : Colors.black,
                     size: 20,
                   ),
                 ),
@@ -237,8 +405,8 @@ class _MenuItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: textColor ?? Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),

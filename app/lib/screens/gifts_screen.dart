@@ -267,35 +267,38 @@ class _GiftsScreenState extends State<GiftsScreen> {
           },
         );
       case 3: // Global House
-        return const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'GLOBAL',
+        return Image.asset(
+          'assets/Logo/global.png',
+          width: 50,
+          height: 50,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return const Text(
+              'Global House',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 10,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-            ),
-            Text(
-              'House',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+            );
+          },
         );
       case 4: // True
-        return const Text(
-          'tru',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+        return Image.asset(
+          'assets/Logo/true.png',
+          width: 50,
+          height: 50,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return const Text(
+              'True',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          },
         );
       case 5: // Green (placeholder)
         return const Icon(
@@ -368,20 +371,28 @@ class _GiftsScreenState extends State<GiftsScreen> {
           },
         );
       case 9: // UOB
-        return const Text(
-          'UOB',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+        return Image.asset(
+          'assets/Logo/UOB.png',
+          width: 50,
+          height: 50,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return const Text(
+              'UOB',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          },
         );
       default:
         return const Text(
           '?',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         );

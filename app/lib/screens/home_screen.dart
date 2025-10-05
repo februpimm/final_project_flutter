@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../widgets/section_header.dart';
 import '../widgets/poster_card.dart';
 import '../widgets/discount_card.dart';
+import 'membership_qr_screen.dart';
+import 'ticket_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.onScroll});
@@ -42,9 +44,28 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   const Text('Now showing', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 28)),
                   const Spacer(),
-                  const Icon(Icons.qr_code_2_rounded),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const MembershipQRScreen(),
+                        ),
+                      );
+                    },
+                    child: const Icon(Icons.qr_code_2_rounded),
+                  ),
                   const SizedBox(width: 16),
-                  const Icon(Icons.confirmation_num_outlined),
+                  GestureDetector(
+                    onTap: () {
+                      print('🎫 Ticket icon tapped - Navigating to TicketScreen');
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const TicketScreen(),
+                        ),
+                      );
+                    },
+                    child: const Icon(Icons.confirmation_num_outlined),
+                  ),
                   const SizedBox(width: 16),
                   const Icon(Icons.person_outline),
                 ],
@@ -73,7 +94,34 @@ class HomeScreen extends StatelessWidget {
                         CircleAvatar(
                           radius: 22,
                           backgroundColor: Color(0xFFFAC23A),
-                          child: Text('M', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 22)),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/Logo/Major.png',
+                              width: 44,
+                              height: 44,
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  width: 44,
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFFAC23A),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'M',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 22,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ),
                         SizedBox(width: 16),
                         Expanded(

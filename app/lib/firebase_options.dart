@@ -41,49 +41,46 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCVSybM65B0e7WV0HtDy3zELF8NHsbKYd8',
-    appId: '1:993349408293:web:07e48560e5396d42d2d1cc',
-    messagingSenderId: '993349408293',
-    projectId: 'cinema-project-4eb9d',
-    authDomain: 'cinema-project-4eb9d.firebaseapp.com',
-    storageBucket: 'cinema-project-4eb9d.firebasestorage.app',
-    measurementId: 'G-J9DN8V1KSF',
+    apiKey: 'AIzaSyDEP1ODC0JCAXP8PkEoo5pwiCyYI9u4mqQ',
+    appId: '1:302307213825:web:1083cce8cf8abdd87c3600',
+    messagingSenderId: '302307213825',
+    projectId: 'cinema-project-b8799',
+    authDomain: 'cinema-project-b8799.firebaseapp.com',
+    storageBucket: 'cinema-project-b8799.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDCbwYknt4cua843vgI15oOAbTtAa7BzlE',
-    appId: '1:993349408293:android:891004641bdf4156d2d1cc',
-    messagingSenderId: '993349408293',
-    projectId: 'cinema-project-4eb9d',
-    storageBucket: 'cinema-project-4eb9d.firebasestorage.app',
+    apiKey: 'AIzaSyDEP1ODC0JCAXP8PkEoo5pwiCyYI9u4mqQ',
+    appId: '1:302307213825:android:5c59615828d9f4cd7c3600',
+    messagingSenderId: '302307213825',
+    projectId: 'cinema-project-b8799',
+    storageBucket: 'cinema-project-b8799.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAhyDNjQFoSWhgRO21eSVr8CVQF2ie-pMY',
-    appId: '1:993349408293:ios:3cbf6ebcf76388a0d2d1cc',
-    messagingSenderId: '993349408293',
-    projectId: 'cinema-project-4eb9d',
-    storageBucket: 'cinema-project-4eb9d.firebasestorage.app',
-    iosBundleId: 'com.example.projectmobile.app',
+    apiKey: 'AIzaSyDEP1ODC0JCAXP8PkEoo5pwiCyYI9u4mqQ',
+    appId: '1:302307213825:ios:5e5aaf7a5743fdb87c3600',
+    messagingSenderId: '302307213825',
+    projectId: 'cinema-project-b8799',
+    storageBucket: 'cinema-project-b8799.appspot.com',
+    iosBundleId: 'com.example.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAhyDNjQFoSWhgRO21eSVr8CVQF2ie-pMY',
-    appId: '1:993349408293:ios:3cbf6ebcf76388a0d2d1cc',
-    messagingSenderId: '993349408293',
-    projectId: 'cinema-project-4eb9d',
-    storageBucket: 'cinema-project-4eb9d.firebasestorage.app',
-    iosBundleId: 'com.example.projectmobile.app',
+    apiKey: 'AIzaSyDEP1ODC0JCAXP8PkEoo5pwiCyYI9u4mqQ',
+    appId: '1:302307213825:ios:5e5aaf7a5743fdb87c3600',
+    messagingSenderId: '302307213825',
+    projectId: 'cinema-project-b8799',
+    storageBucket: 'cinema-project-b8799.appspot.com',
+    iosBundleId: 'com.example.app',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCVSybM65B0e7WV0HtDy3zELF8NHsbKYd8',
-    appId: '1:993349408293:web:e5f4c0164c675a19d2d1cc',
-    messagingSenderId: '993349408293',
-    projectId: 'cinema-project-4eb9d',
-    authDomain: 'cinema-project-4eb9d.firebaseapp.com',
-    storageBucket: 'cinema-project-4eb9d.firebasestorage.app',
-    measurementId: 'G-E9YG7XXS6B',
+    apiKey: 'AIzaSyDEP1ODC0JCAXP8PkEoo5pwiCyYI9u4mqQ',
+    appId: '1:302307213825:web:f477a43440ec8dd07c3600',
+    messagingSenderId: '302307213825',
+    projectId: 'cinema-project-b8799',
+    authDomain: 'cinema-project-b8799.firebaseapp.com',
+    storageBucket: 'cinema-project-b8799.appspot.com',
   );
-
 }

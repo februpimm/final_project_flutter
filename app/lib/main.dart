@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'screens/main_shell.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'screens/onboarding_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -25,7 +31,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
       ),
       scrollBehavior: const _AppScrollBehavior(),
-      home: const MainShell(),
+      home: const OnboardingScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

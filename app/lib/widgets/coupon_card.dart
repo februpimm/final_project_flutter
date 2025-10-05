@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class NewsCard extends StatelessWidget {
+class CouponCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final String description;
   final String timeAgo;
 
-  const NewsCard({
+  const CouponCard({
     super.key,
     required this.imagePath,
     required this.title,
@@ -19,8 +19,8 @@ class NewsCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       decoration: BoxDecoration(
-        color: const Color(0xFF2A2A2A),
         borderRadius: BorderRadius.circular(12),
+        color: const Color(0xFF2A2A2A),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,13 +61,14 @@ class NewsCard extends StatelessWidget {
                   Text(
                     description,
                     style: const TextStyle(
-                      color: Colors.grey,
+                      color: Colors.white70,
                       fontSize: 12,
+                      height: 1.3,
                     ),
-                    maxLines: 4,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 8),
+                  const Spacer(),
                   // Time ago
                   Text(
                     timeAgo,
@@ -84,4 +85,30 @@ class NewsCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class DashedLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white.withOpacity(0.3)
+      ..strokeWidth = 1.0
+      ..style = PaintingStyle.stroke;
+
+    const dashHeight = 4.0;
+    const dashSpace = 3.0;
+    double startY = 0;
+
+    while (startY < size.height) {
+      canvas.drawLine(
+        Offset(0, startY),
+        Offset(0, startY + dashHeight),
+        paint,
+      );
+      startY += dashHeight + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
