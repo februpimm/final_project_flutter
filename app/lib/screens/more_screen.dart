@@ -19,81 +19,6 @@ class MoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1A1A1A),
-      bottomNavigationBar: Container(
-        height: 80,
-        decoration: const BoxDecoration(
-          color: Color(0xFF1A1A1A),
-          border: Border(
-            top: BorderSide(color: Color(0xFF2A2A2A), width: 1),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            // Home
-            _NavItem(
-              icon: Icons.home_rounded,
-              label: 'Home',
-              isSelected: false,
-              onTap: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const MainShell(initialIndex: 0),
-                  ),
-                );
-              },
-            ),
-            // Movies
-            _NavItem(
-              icon: Icons.movie_outlined,
-              label: 'Movies',
-              isSelected: false,
-              onTap: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const MainShell(initialIndex: 1),
-                  ),
-                );
-              },
-            ),
-            // Cinema
-            _NavItem(
-              icon: Icons.location_on_outlined,
-              label: 'Cinema',
-              isSelected: false,
-              onTap: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const MainShell(initialIndex: 2),
-                  ),
-                );
-              },
-            ),
-            // Gifts
-            _NavItem(
-              icon: Icons.card_giftcard_outlined,
-              label: 'Documents',
-              isSelected: false,
-              onTap: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const MainShell(initialIndex: 3),
-                  ),
-                );
-              },
-            ),
-            // More
-            _NavItem(
-              icon: Icons.more_horiz,
-              label: 'More',
-              isSelected: true,
-              onTap: () {
-                // Already on More screen
-              },
-            ),
-          ],
-        ),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -310,51 +235,6 @@ class _MajorCineplexLogo extends StatelessWidget {
   }
 }
 
-class _NavItem extends StatelessWidget {
-  const _NavItem({
-    required this.icon,
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: isSelected ? const Color(0xFFFAC23A) : Colors.grey,
-              size: 24,
-            ),
-            // Show label only when selected
-            if (isSelected) ...[
-              const SizedBox(height: 4),
-              Text(
-                label,
-                style: const TextStyle(
-                  color: Color(0xFFFAC23A),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _MenuItem extends StatelessWidget {
   const _MenuItem({

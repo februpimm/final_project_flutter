@@ -25,7 +25,8 @@ class HomeScreen extends StatelessWidget {
           return false;
         },
         child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.only(bottom: 100),
           children: [
             // Header row
             Padding(
@@ -44,30 +45,55 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   const Text('Now showing', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 28)),
                   const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const MembershipQRScreen(),
-                        ),
-                      );
-                    },
-                    child: const Icon(Icons.qr_code_2_rounded),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const MembershipQRScreen(),
+                          ),
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.qr_code_2_rounded),
+                      ),
+                    ),
                   ),
-                  const SizedBox(width: 16),
-                  GestureDetector(
-                    onTap: () {
-                      print('🎫 Ticket icon tapped - Navigating to TicketScreen');
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const TicketScreen(),
-                        ),
-                      );
-                    },
-                    child: const Icon(Icons.confirmation_num_outlined),
+                  const SizedBox(width: 8),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const TicketScreen(),
+                          ),
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.confirmation_num_outlined),
+                      ),
+                    ),
                   ),
-                  const SizedBox(width: 16),
-                  const Icon(Icons.person_outline),
+                  const SizedBox(width: 8),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        // Handle profile tap
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.person_outline),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -145,7 +171,33 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            const SectionHeader(title: 'Discounts', trailingText: 'View All'),
+            // Discounts Section with Progress Bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Discounts',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(
+                    'View All',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            // Discount Cards
             SizedBox(
               height: 160,
               child: ListView.separated(

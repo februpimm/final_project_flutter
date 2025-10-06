@@ -22,7 +22,6 @@ class MainShell extends StatefulWidget {
 
 class _MainShellState extends State<MainShell> {
   int _currentIndex = 0;
-  late final PageController _pageController;
   bool _isLoggedIn = false;
 
   List<Widget> _tabs = [];
@@ -31,7 +30,6 @@ class _MainShellState extends State<MainShell> {
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
-    _pageController = PageController(initialPage: _currentIndex);
     
     // Start with logged out state for More tab
     _isLoggedIn = false;
@@ -58,9 +56,9 @@ class _MainShellState extends State<MainShell> {
       _updateTabs();
     });
     
-    // If user just logged in, stay on More tab but show MoreScreen
-    if (loggedIn && _currentIndex == 4) {
-      print('✅ User logged in - staying on More tab with MoreScreen');
+    // If user just logged in, navigate to More tab (index 4)
+    if (loggedIn) {
+      _currentIndex = 4;
     }
   }
 
@@ -70,17 +68,15 @@ class _MainShellState extends State<MainShell> {
   }
 
   void _onNavTap(int index) {
-    setState(() => _currentIndex = index);
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 280),
-      curve: Curves.easeInOutCubic,
-    );
+    if (_currentIndex != index) {
+      setState(() {
+        _currentIndex = index;
+      });
+    }
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
     super.dispose();
   }
 
@@ -90,10 +86,8 @@ class _MainShellState extends State<MainShell> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
-      body: PageView(
-        controller: _pageController,
-        physics: const ClampingScrollPhysics(),
-        onPageChanged: (i) => setState(() => _currentIndex = i),
+      body: IndexedStack(
+        index: _currentIndex,
         children: _tabs,
       ),
       bottomNavigationBar: Container(
@@ -165,31 +159,35 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: isSelected ? const Color(0xFFFAC23A) : Colors.grey,
-              size: 24,
-            ),
-            // Show label only when selected
-            if (isSelected) ...[
-              const SizedBox(height: 4),
-              Text(
-                label,
-                style: const TextStyle(
-                  color: Color(0xFFFAC23A),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                color: isSelected ? const Color(0xFFFAC23A) : Colors.grey,
+                size: 24,
               ),
+              // Show label only when selected
+              if (isSelected) ...[
+                const SizedBox(height: 4),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: Color(0xFFFAC23A),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

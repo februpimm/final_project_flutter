@@ -9,40 +9,45 @@ class DiscountsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1A1A1A),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1A1A1A),
-        elevation: 0,
-        title: const Text(
-          'All Discounts',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Navigate to home screen with smooth transition
-              Navigator.of(context).pop();
-            },
-            child: const Text(
-              'Reset',
-              style: TextStyle(
-                color: Color(0xFFFF9800),
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Header with Discounts title and View All button
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Discounts',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      // Navigate to home screen with smooth transition
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text(
+                      'View All',
+                      style: TextStyle(
+                        color: Color(0xFFFFD700),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          const SizedBox(width: 16),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        children: [
-          // Discount Cards List - Direct display without section headers
-          const SizedBox(height: 16),
+            // Discount Cards List
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                children: [
           const DiscountCard(
             imagePath: 'assets/coupon/image17.jpg',
             title: 'IMAX with Laser',
@@ -66,8 +71,12 @@ class DiscountsScreen extends StatelessWidget {
             discountAmount: '150',
             validUntil: '31 Dec, 2025',
           ),
-          const SizedBox(height: 20),
-        ],
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

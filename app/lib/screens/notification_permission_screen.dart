@@ -46,7 +46,7 @@ class NotificationPermissionScreen extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 20),
 
                     // Notification Banner with Image
                     Container(
@@ -66,7 +66,7 @@ class NotificationPermissionScreen extends StatelessWidget {
                         children: [
                           // Header with notification icon and text
                           Padding(
-                            padding: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(16),
                             child: Row(
                               children: [
                                 const Icon(
@@ -104,7 +104,7 @@ class NotificationPermissionScreen extends StatelessWidget {
                           // Notification Image
                           Container(
                             width: double.infinity,
-                            height: 300,
+                            height: 150,
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(16),
@@ -137,7 +137,7 @@ class NotificationPermissionScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 16),
 
                     // Call to Action
                     const Text(
@@ -149,17 +149,17 @@ class NotificationPermissionScreen extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                     const Text(
                       'Just enable Push notifications and wait to receive the coupon in the app within 24 hours.',
                       style: TextStyle(
                         color: Colors.white70,
-                        fontSize: 14,
-                        height: 1.5,
+                        fontSize: 13,
+                        height: 1.4,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 16),
 
                     // Additional Benefits
                     _BenefitRow(
@@ -170,18 +170,14 @@ class NotificationPermissionScreen extends StatelessWidget {
                       icon: Icons.theaters,
                       text: 'Can be used for all movies and all showtimes',
                     ),
-                    _BenefitRow(
-                      icon: Icons.cake,
-                      text: 'Watch free movies during your birthday week',
-                    ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
             ),
             // Skip Button at the bottom
             Container(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(16.0),
               width: double.infinity,
               child: SizedBox(
                 height: 50,
@@ -230,7 +226,7 @@ class _BenefitRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

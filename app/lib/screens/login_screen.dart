@@ -625,12 +625,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               );
                               
-                              // Navigate to MoreScreen instead of going back
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => const MoreScreen(),
-                                ),
-                              );
+                              // Navigate back to initial more screen with success result
+                              Navigator.of(context).pop(true);
                             }
                         } catch (e) {
                           if (mounted) {
@@ -671,12 +667,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             );
                             
-                            // Navigate to MoreScreen instead of going back
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const MoreScreen(),
-                              ),
-                            );
+                            // Navigate back to initial more screen with success result
+                            Navigator.of(context).pop(true);
                           } else {
                             // Email doesn't exist - Switch to signup mode
                             print('❌ Email not found - Switching to signup mode');

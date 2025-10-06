@@ -113,9 +113,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildNotificationPage() {
     return Padding(
       padding: const EdgeInsets.all(24.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
           // Background Image
           Container(
             width: double.infinity,
@@ -238,7 +239,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 30),
           
           // Notification Bell Icon
           Container(
@@ -258,7 +259,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               size: 40,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
           
           // Title
           const Text(
@@ -270,7 +271,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           
           // Description
           const Text(
@@ -282,7 +283,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-        ],
+          ],
+        ),
       ),
     );
   }
